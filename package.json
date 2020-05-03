@@ -1,0 +1,26 @@
+{
+  "name": "docs-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "preferGlobal": true,
+  "bin": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "tsc",
+    "start": "tsc && node ./dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "webpack": "^4.43.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "ts-loader": "^7.0.2",
+    "typescript": "^3.8.3",
+    "webpack-cli": "^3.3.11"
+  }
+}
