@@ -1,5 +1,8 @@
 export const getConfigTemplate = (): string => `{
-    "output": "docs",
+    "output": {
+        "path": "docs",
+        "type": "website"
+    },
     "entry": {
         "paths": {
             "include": "*",

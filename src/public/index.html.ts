@@ -1,3 +1,4 @@
+const indexHtml = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,3 +13,4 @@
     <script src="loader.js"></script>
 </body>
 </html>
+`

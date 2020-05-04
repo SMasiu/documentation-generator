@@ -1,5 +1,13 @@
+export enum OutputType {
+    website = 'website',
+    md = 'md'
+}
+
 export interface DingoConfig {
-    output: string;
+    output: {
+        path: string;
+        type: OutputType;
+    },
     entry: {
         paths: {
             include: string | string[];

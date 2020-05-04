@@ -9,7 +9,7 @@ export const generateDocs = async () => {
         const logger = new Logger(config);
 
         logger.log('Crenating output directory...');
-        await createOutputDir(config.output);
+        await createOutputDir(config.output.path);
 
     } catch(err) {
         throw err;
