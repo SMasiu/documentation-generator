@@ -1,4 +1,4 @@
-export const getConfigTemplate = (): string => `{
+{
     "output": "docs",
     "entry": {
         "paths": {
@@ -17,4 +17,4 @@ export const getConfigTemplate = (): string => `{
     "app": {
         "name": "dingo documentation"
     }
-}`
+}

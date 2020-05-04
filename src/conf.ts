@@ -1,1 +1,1 @@
-export const configFileName = 'docs-generator.json';
+export const configFileName = 'dingo.config.json';  
