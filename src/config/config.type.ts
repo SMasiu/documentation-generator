@@ -12,5 +12,8 @@ export interface DingoConfig {
     },
     app: {
         name: string;
+    },
+    program: {
+        verbose: boolean;
     }
 }

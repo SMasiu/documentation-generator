@@ -13,8 +13,11 @@ export const getConfigTemplate = (): string => `{
             "include": "*",
             "exclude": [".json"]
         }
-    },
+    },  
     "app": {
         "name": "dingo documentation"
+    },
+    "program": {
+        "verbose": false
     }
 }`

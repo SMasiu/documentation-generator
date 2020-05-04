@@ -13,8 +13,11 @@
             "include": "*",
             "exclude": [".json"]
         }
-    },
+    },  
     "app": {
         "name": "dingo documentation"
+    },
+    "program": {
+        "verbose": true
     }
 }
