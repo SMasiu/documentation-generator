@@ -1,5 +1,8 @@
 {
-    "output": "docs",
+    "output": {
+        "path": "docs",
+        "type": "website"
+    },
     "entry": {
         "paths": {
             "include": "*",
@@ -18,6 +21,6 @@
         "name": "dingo documentation"
     },
     "program": {
-        "verbose": true
+        "verbose": false
     }
 }

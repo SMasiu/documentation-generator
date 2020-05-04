@@ -10,7 +10,6 @@ export const outputResolver = (type: string, docMap: any): Promise<void> => {
             }
 
             return resolve(await resolvers[type](docMap));
-
         } catch (err) {
             return reject(err);
         }
