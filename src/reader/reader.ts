@@ -8,7 +8,6 @@ import { internalError } from "../errors/error-exceptions";
 export class Reader {
     
     private path: string;
-    private readLevel: number = 0;
 
     constructor(private config: DingoConfig) {
         this.path = process.cwd();
@@ -18,7 +17,6 @@ export class Reader {
     readEntry(): Promise<DocsMaper> {
         return new Promise(async (resolve, reject) => {
             try {
-                this.readLevel = 0;
                 let maper = new DocsMaper();
 
                 await this.readEntryRecursive(maper, this.path);
@@ -63,11 +61,11 @@ export class Reader {
                     const stats: Stats = await aLstat(join(path, f));
 
                     if(stats.isFile()) {
-                        if(this.matchFileToRead(f)) {
+                        if(this.canReadFile(f, path)) {
                             files.push(f);
                         }
                     } else if (stats.isDirectory()) {
-                        if(!this.isInExcludeFolder(f)) {
+                        if(this.canReadFolder(f, path)) {
                             folders.push(f);
                         }
                     }
@@ -80,16 +78,34 @@ export class Reader {
         });
     }
 
-    isInExcludeFolder(folder: string): boolean {
-        return this.config.entry.paths.exclude.findIndex( e => e === folder ) === -1 ? false : true;
+    canReadFolder(folder: string, path: string): boolean {
+        const absPath = this.getAbsPath(path, folder);
+        let { include, exclude } = this.config.entry.paths;
+
+        if((typeof include === 'string' && include === '*') || (<Array<string>>include)?.find?.( i => absPath.search(new RegExp(`^${i}`)) === 0 ))  {
+            return exclude.findIndex( e => e === folder ) === -1 ? true : false;
+        }
+        return false;
     }
 
-    matchFileToRead(file: string): boolean {
-        let splited = file.split('.');
-        
-        let sufix = `.${splited[splited.length - 1]}`;
+    canReadFile(file: string, path: string): boolean {
+        const { exclude } = this.config.entry.files;
+        let absPath = this.getAbsPath(path, file);
+        // console.log(absPath)
 
-        return this.config.entry.files.exclude.findIndex( e => e === sufix ) === -1 ? true : false;
+        for(let excl of exclude) {
+            if(excl.search(/\*/) === -1) {
+                if(absPath === excl) { return false; }
+            } else if(excl?.[0] === '*') {
+                if(file.search(new RegExp(`${excl.substring(1, excl.length)}$`)) !== -1) { return false; }
+            }
+        }
+
+        return true;
+    }
+
+    getAbsPath(path: string, file: string): string {
+        return join(path, file).substring(this.path.length + 1, path.length + path.length);
     }
 
 }
