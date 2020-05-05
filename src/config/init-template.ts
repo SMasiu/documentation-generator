@@ -5,13 +5,11 @@ export const getConfigTemplate = (): string => `{
     },
     "entry": {
         "paths": {
-            "include": "*",
             "exclude": [
                 "docs", "bin", "dist", ".git", "node_modules"
             ]
         },
         "files": {
-            "include": "*",
             "exclude": [
                 ".json", ".gitignore"
             ]

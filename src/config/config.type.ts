@@ -10,11 +10,9 @@ export interface DingoConfig {
     },
     entry: {
         paths: {
-            include: string | string[];
             exclude: string[];
         },
         files: {
-            include: string | string[];
             exclude: string[];
         }
     },
