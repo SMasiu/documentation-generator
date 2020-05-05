@@ -3,17 +3,21 @@ import { createOutputDir } from "./create-output-dir";
 import { dingoConfigLoader } from "../../config/config";
 import { Logger } from "../../logger/logger";
 import { outputResolver } from "./output-resolver";
+import { Reader } from "../../reader/reader";
 
 export const generateDocs = (): Promise<void> => {
     return new Promise(async (resolve, reject) => {
         try {
             let config: DingoConfig = await dingoConfigLoader.load();
             const logger = new Logger(config);
+            const reader = new Reader(config);
 
-            logger.log('Crenating output directory...');
-            await createOutputDir(config.output.path);
+            await reader.readEntry();
 
-            await outputResolver(config.output.type, null);
+            // logger.log('Crenating output directory...');
+            // await createOutputDir(config.output.path);
+
+            // await outputResolver(config.output.type, null);
 
             return resolve();
 

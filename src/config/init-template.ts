@@ -7,14 +7,14 @@ export const getConfigTemplate = (): string => `{
         "paths": {
             "include": "*",
             "exclude": [
-                "docs",
-                "bin",
-                "dist"
+                "docs", "bin", "dist", ".git", "node_modules"
             ]
         },
         "files": {
             "include": "*",
-            "exclude": [".json"]
+            "exclude": [
+                ".json", ".gitignore"
+            ]
         }
     },  
     "app": {

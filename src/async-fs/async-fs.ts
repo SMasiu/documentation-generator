@@ -1,4 +1,4 @@
-import { mkdir, exists, MakeDirectoryOptions, writeFile, readFile } from 'fs';
+import { mkdir, exists, MakeDirectoryOptions, writeFile, readFile, readdir, lstat, Stats } from 'fs';
 import { internalError } from '../errors/error-exceptions';
 
 export const aMkdir = (path: string, optrions: MakeDirectoryOptions = {}): Promise<string> => {
@@ -28,5 +28,21 @@ export const aReadFile = (path: string): Promise<Buffer> => {
         readFile(path, (err: Error | null, buffer: Buffer) => {
             return err ? reject(internalError()) : resolve(buffer);
         });
+    });
+}
+
+export const aReadDir = (path: string): Promise<string[]> => {
+    return new Promise((resolve, reject) => {
+        readdir(path, (err: Error | null, files: string[]) => {
+            return err ? reject(err) : resolve(files);
+        })
+    })
+}
+
+export const aLstat = (path: string): Promise<Stats> => {
+    return new Promise(async (resolve, reject) => {
+        lstat(path, (err: Error | null, stats: Stats) => {
+            return err ? reject(err) : resolve(stats);
+        })
     });
 }
