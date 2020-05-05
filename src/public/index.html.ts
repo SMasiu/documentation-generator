@@ -10,7 +10,7 @@ export const indexHtml = `
 <body>
     <h1>Documentation</h1>
 
-    <script src="loader.js"></script>
+    <script src="scripts/loader.js"></script>
 </body>
 </html>
 `
