@@ -2,6 +2,7 @@ import { DingoConfig } from "../config/config.type";
 import { DocsMaper } from "../docs-maper/docs-maper";
 import { internalError } from "../errors/error-exceptions";
 import glob from 'glob';
+import { UseLanguageReader } from "../language-reader/use-language-reader";
 
 interface FoldersMatch {
     simple: string[];
@@ -15,12 +16,7 @@ interface FileMatch {
 
 export class Reader {
     
-    private path: string;
-
-    constructor(private config: DingoConfig) {
-        this.path = process.cwd();
-    }
-
+    constructor(private config: DingoConfig) { }
 
     readEntry(): Promise<DocsMaper> {
         return new Promise(async (resolve, reject) => {
@@ -28,13 +24,18 @@ export class Reader {
                 let maper = new DocsMaper();
 
                 const files = await this.getFilePaths();
-                console.log(files)
+                
+                let useLanguageReader = new UseLanguageReader();
+
+                for(let file of files) {
+                    console.log(file, await useLanguageReader.getLanguageReader(file));
+                }
+
             } catch {
                 return reject(internalError());
             }
         });
     }
-
 
     readFile(): Promise<void> {
         return new Promise(async (resolve, reject) => {
@@ -80,7 +81,6 @@ export class Reader {
     }
 
     getFileMath(): FileMatch {
-
         const { exclude } = this.config.entry.files;
         const files: FileMatch = { ext: [], filePath: [] };
 
@@ -92,7 +92,6 @@ export class Reader {
     }
 
     getFolderMath(): FoldersMatch {
-
         const { exclude } = this.config.entry.paths;
         const folders: FoldersMatch = { simple: [], multiple: [] };
 
@@ -101,7 +100,6 @@ export class Reader {
         });
 
         return folders;
-
     }
 
 }
