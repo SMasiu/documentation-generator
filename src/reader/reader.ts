@@ -3,6 +3,7 @@ import { DocsMaper } from "../docs-maper/docs-maper";
 import { internalError } from "../errors/error-exceptions";
 import glob from 'glob';
 import { UseLanguageReader } from "../language-reader/use-language-reader";
+import { LanguageReader } from "../language-reader/readers/language-reader";
 
 interface FoldersMatch {
     simple: string[];
@@ -28,18 +29,13 @@ export class Reader {
                 let useLanguageReader = new UseLanguageReader();
 
                 for(let file of files) {
-                    console.log(file, await useLanguageReader.getLanguageReader(file));
+                    let reader: LanguageReader = await useLanguageReader.getLanguageReader(file);
+                    reader.readFile();
                 }
 
             } catch {
                 return reject(internalError());
             }
-        });
-    }
-
-    readFile(): Promise<void> {
-        return new Promise(async (resolve, reject) => {
-
         });
     }
 

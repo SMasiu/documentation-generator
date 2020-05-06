@@ -14,7 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/event-stream": "^3.3.34",
     "commander": "^5.1.0",
+    "event-stream": "^4.0.1",
     "glob": "^7.1.6",
     "webpack": "^4.43.0"
   },
