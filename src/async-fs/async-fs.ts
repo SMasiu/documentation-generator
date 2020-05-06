@@ -35,7 +35,7 @@ export const aReadDir = (path: string): Promise<string[]> => {
     return new Promise((resolve, reject) => {
         readdir(path, (err: Error | null, files: string[]) => {
             return err ? reject(err) : resolve(files);
-        })
+        });
     })
 }
 
@@ -43,6 +43,6 @@ export const aLstat = (path: string): Promise<Stats> => {
     return new Promise(async (resolve, reject) => {
         lstat(path, (err: Error | null, stats: Stats) => {
             return err ? reject(err) : resolve(stats);
-        })
+        });
     });
 }

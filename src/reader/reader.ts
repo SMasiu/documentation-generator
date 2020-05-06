@@ -27,7 +27,8 @@ export class Reader {
             try {
                 let maper = new DocsMaper();
 
-                await this.getFilePaths();
+                const files = await this.getFilePaths();
+                console.log(files)
             } catch {
                 return reject(internalError());
             }
@@ -44,18 +45,36 @@ export class Reader {
     getFilePaths(): Promise<string[]> {
         return new Promise((resolve, reject) => {
             
-            console.log(this.getFileMath())
-            console.log(this.getFolderMath())
+            const files = this.getFileMath();
+            const folders = this.getFolderMath();
+            let ext: string = '';
+            let simpleFolders: string = '';
 
-            glob('!(node_modules|docs)/**/!(*.d.ts|*.css)',{
+            files.ext.forEach( e => ext += `${e}|` );
+            ext = ext.substring(0, ext.length - 1);
+            
+            folders.simple.forEach( s => simpleFolders += `${s}|` );
+            simpleFolders = simpleFolders.substring(0, simpleFolders.length - 1);
+
+            glob(`!(${simpleFolders})/**/!(${ext})`,{
                 nodir: true,
-            }, (err: Error | null, files: string[]) => {
+            }, (err: Error | null, globFiles: string[]) => {
                 if(err) {
                     return reject(internalError());
                 }
-                
-                console.log(files)
-                return resolve(files);
+
+                const matchedFiles: string[] = [];
+
+                globFiles.forEach( f => {
+                    if(
+                        (files.filePath.findIndex( e => e === f ) === -1) &&
+                        (folders.multiple.findIndex( p => f.search(new RegExp(`^${p}`)) === 0 ))
+                    ) {
+                        matchedFiles.push(f);
+                    }
+                });
+
+                return resolve(matchedFiles);
             });
         });
     }
