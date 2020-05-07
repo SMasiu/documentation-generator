@@ -2,7 +2,8 @@ import { DirectiveType } from "./directive.types";
 
 export abstract class DirectiveRoot {
 
-    abstract name: string;
+    abstract root: boolean;
+    abstract name: string[];
     abstract type: DirectiveType;
     abstract content: string;
 

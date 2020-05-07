@@ -1,11 +1,11 @@
 import { DirectiveRoot } from "./directive";
 import { DirectiveType } from "./directive.types";
 
-export class DescriptionDirective extends DirectiveRoot {
+export class ClassDirective extends DirectiveRoot {
 
-    root: boolean = false;
-    name: string[] = ['@description'];
-    type: DirectiveType = DirectiveType.any;
+    root: boolean = true;
+    name: string[] = ['@class'];
+    type: DirectiveType = DirectiveType.class;
     content: string = '';
 
     description: string = '';

@@ -10,8 +10,8 @@ export class CssReader extends LanguageReader {
         return ['.css'];
     }
 
-    readFile() {
-        this.loadFileData();
+    getCommentsBlocks(fileData: string[]) {
+        return [];
     }
 
 }

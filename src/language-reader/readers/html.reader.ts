@@ -10,8 +10,8 @@ export class HtmlReader extends LanguageReader {
         return ['.html'];
     }
 
-    readFile() {
-        
+    getCommentsBlocks(fileData: string[]): string[] {
+        return [];
     }
 
 }

@@ -30,7 +30,7 @@ export class Reader {
 
                 for(let file of files) {
                     let reader: LanguageReader = await useLanguageReader.getLanguageReader(file);
-                    reader.readFile();
+                    await reader.readFile();
                 }
 
             } catch {
@@ -96,6 +96,10 @@ export class Reader {
         });
 
         return folders;
+    }
+
+    getDecoratorsBlocks() {
+        
     }
 
 }
