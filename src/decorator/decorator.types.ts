@@ -1,4 +1,4 @@
-export enum DirectiveType {
+export enum DecoratorType {
     any = 'any',
     variable = 'variable',
     function = 'function',
