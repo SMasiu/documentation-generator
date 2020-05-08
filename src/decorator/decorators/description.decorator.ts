@@ -12,7 +12,6 @@ export class DescriptionDecorator extends DecoratorRoot {
     root: boolean = false;
     name: string[] = names;
     type: DecoratorType = DecoratorType.any;
-    content: string = '';
 
     description: string = '';
 
