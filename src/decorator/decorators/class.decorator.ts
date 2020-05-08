@@ -1,14 +1,23 @@
 import { DecoratorRoot } from "./decorator";
-import { DecoratorType } from "./decorator.types";
+import { DecoratorType } from "../decorator.types";
+
+const names: string[] = ['@class'];
 
 export class ClassDecorator extends DecoratorRoot {
 
+    static getDecoratorNames(): string[] {
+        return names;
+    }
+
     root: boolean = true;
-    name: string[] = ['@class'];
+    name: string[] = names;
     type: DecoratorType = DecoratorType.class;
-    content: string = '';
 
     description: string = '';
+
+    constructor(content: string) {
+        super(content)
+    }
 
     parseContent() {
         this.description = this.content;

@@ -1,8 +1,10 @@
 import { join } from 'path';
 import { createReadStream, ReadStream } from 'fs';
 import { internalError } from '../../errors/error-exceptions';
+import { DecoratorRoot } from '../../decorator/decorators/decorator';
+import { UseDecorator } from '../../decorator/use.decorator';
 
-interface Directives {
+interface Decorators {
     name: string;
     content: string;
 }
@@ -12,7 +14,7 @@ export abstract class LanguageReader {
     extension: string = '';
     absolutePath: string;
     commentBlocks: string[] = [];
-    directives: Directives[] = [];
+    decorators: Decorators[] = [];
 
     constructor(public path: string) {
         this.absolutePath = join(process.cwd(), this.path);
@@ -40,7 +42,7 @@ export abstract class LanguageReader {
         this.extension = path.substring(path.lastIndexOf('.'), path.length);
     }
 
-    readFile(): Promise<void> {
+    readFile(): Promise<DecoratorRoot[]> {
         return new Promise((resolve, reject) => {
             const stream: ReadStream = createReadStream(this.absolutePath)
                 .on('data', (chunc: Buffer) => {
@@ -52,41 +54,47 @@ export abstract class LanguageReader {
                     return reject(internalError());
                 })
                 .on('end', () => {
-                    return resolve();
+                    return resolve(this.mapDecorators());
                 });
         });
     }
 
     getDirectives() {
-        let directives: string[] = [];
+        let decorators: string[] = [];
         for(let line of this.commentBlocks) {
-            let directive: string = '';
+            let decorator: string = '';
             let read: boolean = false;
             let charBefore: string = '';
             for(let char of line) {
                 if(char === '@') {
                     read = true;
-                    directive += char;
+                    decorator += char;
                 } else if (read) {
                     if(charBefore !== '\\' && char === ';') {
-                        directives.push(directive);
-                        directive = '';
+                        decorators.push(decorator);
+                        decorator = '';
                         read = false;
                     } else {
-                        directive += char;
+                        decorator += char;
                     }
                 }
                 charBefore = char;
             }
         }
-        this.directives = directives.map( d => {
+        this.decorators = decorators.map( d => {
             let splited = d.split(' ');
             return {
                 name: splited?.[0] || '',
                 content: splited?.[1] || ''
             }
-        })
-        console.log(this.directives)
+        });
+    }
+
+    mapDecorators(): DecoratorRoot[] {
+        let useDecorator = new UseDecorator();
+        let allDecorators = this.decorators.map( d => useDecorator.getDecorator(d.name, d.content));
+        let filtred = (<DecoratorRoot[]>allDecorators.filter( a => a !== undefined))
+        return filtred;
     }
 
 }
