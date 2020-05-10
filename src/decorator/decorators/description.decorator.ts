@@ -23,4 +23,8 @@ export class DescriptionDecorator extends DecoratorRoot {
         this.description = this.content;
     }
 
+    modifyResponse(obj: {[key: string]: any}) {
+        return {...obj};
+    }
+
 }

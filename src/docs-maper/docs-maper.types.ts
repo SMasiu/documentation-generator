@@ -1,0 +1,1 @@
+export type RawObjectType = {[key: string]: any};
