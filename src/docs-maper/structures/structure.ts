@@ -6,7 +6,9 @@ export abstract class Structure {
     decorators: DecoratorRoot[] = [];
     structures: Structure[] = [];
 
-    constructor(private maper: DocsMaper) { }
+    constructor(public maper: DocsMaper) {
+        this.register();
+    }
 
     abstract register(): void;
 

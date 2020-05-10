@@ -1,14 +1,14 @@
 import { Structure } from "./structure";
 import { DocsMaper } from "../docs-maper";
 
-export class FileStructure extends Structure {
-    
+export class ClassStructure extends Structure {
+
     constructor(maper: DocsMaper) {
         super(maper);
     }
 
-    register() {
-        this.maper.registerFile(this);
-    }   
+    register() { 
+        this.maper.registerClass(this);
+    }
 
 }

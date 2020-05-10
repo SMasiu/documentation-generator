@@ -4,6 +4,15 @@ import { internalError } from "../errors/error-exceptions";
 import glob from 'glob';
 import { UseLanguageReader } from "../language-reader/use-language-reader";
 import { LanguageReader } from "../language-reader/readers/language-reader";
+import { DecoratorRoot } from "../decorator/decorators/decorator";
+import { FileStructure } from "../docs-maper/structures/file.structure";
+import { ClassStructure } from "../docs-maper/structures/class.structure";
+import { DecoratorType } from "../decorator/decorator.types";
+import { Structure } from "../docs-maper/structures/structure";
+import { MethodStructure } from "../docs-maper/structures/method.structure";
+import { PropertyStructure } from "../docs-maper/structures/property.structure";
+import { FunctionStrucrure } from "../docs-maper/structures/function.structure";
+import { VariableStructure } from "../docs-maper/structures/variable.structure";
 
 interface FoldersMatch {
     simple: string[];
@@ -30,9 +39,11 @@ export class Reader {
 
                 for(let file of files) {
                     let reader: LanguageReader = await useLanguageReader.getLanguageReader(file);
-                    let decorators = await reader.readFile();
-                    console.log(decorators)
+                    let decorators: DecoratorRoot[] = await reader.readFile();
+                    this.generateStructure(maper, decorators);
                 }
+
+                console.log(maper);
 
             } catch {
                 return reject(internalError());
@@ -98,4 +109,47 @@ export class Reader {
 
         return folders;
     }
+
+    generateStructure(maper: DocsMaper, decorators: DecoratorRoot[]) {
+        if(decorators.length) {
+            let fileStructure = new FileStructure(maper);
+            let lastClass: ClassStructure | null = null;
+            let lastStructure: Structure | null = null;
+            for(let dec of decorators) {
+                if(dec.root) {
+                    if(dec.type === DecoratorType.class) {
+                        lastClass = new ClassStructure(maper);
+                        lastClass.appendDecorator(dec);
+                        lastStructure = lastClass;
+                        fileStructure.appendStructure(lastClass);
+                    } else if(lastClass && dec.type === DecoratorType.method) {
+                        let methodStructure = new MethodStructure(maper);
+                        lastStructure = methodStructure;
+                        methodStructure.appendDecorator(dec);
+                        (<ClassStructure>lastClass).appendStructure(methodStructure);
+                    } else if(lastClass && dec.type === DecoratorType.property) {
+                        let propertyStructure = new PropertyStructure(maper);
+                        lastStructure = propertyStructure;
+                        propertyStructure.appendDecorator(dec);
+                        (<ClassStructure>lastClass).appendStructure(propertyStructure);
+                    } else if(dec.type === DecoratorType.function) {
+                        let functionStructure = new FunctionStrucrure(maper);
+                        lastStructure = functionStructure;
+                        functionStructure.appendDecorator(dec);
+                        fileStructure.appendStructure(functionStructure);
+                    } else if(dec.type === DecoratorType.variable) {
+                        let variableStructure = new VariableStructure(maper);
+                        lastStructure = variableStructure;
+                        variableStructure.appendDecorator(dec);
+                        fileStructure.appendStructure(variableStructure);
+                    }
+                } else {
+                    if(lastStructure !== null) {
+                        lastStructure.appendDecorator(dec);
+                    }
+                }
+            }
+        }
+    }
+
 }

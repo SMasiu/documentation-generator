@@ -16,6 +16,7 @@ export abstract class DecoratorRoot {
     abstract type: DecoratorType;
 
     abstract parseContent(): void;
+    abstract modifyResponse(object: {[key: string]: any}): {[key: string]: any};
 
     constructor(public content: string) { }
 
