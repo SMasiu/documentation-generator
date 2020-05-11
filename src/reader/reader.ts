@@ -38,7 +38,6 @@ export class Reader {
                 }
 
                 let rawObject: RawObjectType = maper.generateRawObject();
-                console.log(rawObject.structures)
                 return resolve(rawObject);
 
             } catch {

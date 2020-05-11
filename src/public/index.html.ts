@@ -9,7 +9,8 @@ export const indexHtml = `
 </head>
 <body>
     <h1>Documentation</h1>
-
+    
+    <script src="scripts/docs.provider.js"></script>
     <script src="scripts/loader.js"></script>
 </body>
 </html>
