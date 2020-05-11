@@ -14,12 +14,14 @@ export class PropertyDecorator extends DecoratorRoot {
 
     type: DecoratorType = DecoratorType.property;
 
+    private propertyName: string = '';
+
     constructor(content: string) {
         super(content);
     }
 
     parseContent() {
-        
+        this.propertyName = this.content;
     }
 
     modifyResponse(obj: {[key: string]: any}) {

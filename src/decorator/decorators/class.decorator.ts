@@ -13,18 +13,18 @@ export class ClassDecorator extends DecoratorRoot {
     name: string[] = names;
     type: DecoratorType = DecoratorType.class;
 
-    description: string = '';
+    private className: string = '';
 
     constructor(content: string) {
         super(content)
     }
 
     parseContent() {
-        this.description = this.content;
+        this.className = this.content;
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, name: this.className, structureType: this.type};
     }
 
 }

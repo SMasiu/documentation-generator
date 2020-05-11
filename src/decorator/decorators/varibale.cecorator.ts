@@ -13,18 +13,18 @@ export class VariableDecorator extends DecoratorRoot {
     name: string[] = names;
     type: DecoratorType = DecoratorType.variable;
 
-    description: string = '';
+    private variableName: string = '';
 
     constructor(content: string) {
         super(content)
     }
 
     parseContent() {
-        this.description = this.content;
+        this.variableName = this.content;
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, name: this.variableName, structureType: this.type};
     }
 
 }

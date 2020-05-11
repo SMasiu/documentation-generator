@@ -33,11 +33,13 @@ export class Reader {
                 for(let file of files) {
                     let reader: LanguageReader = await useLanguageReader.getLanguageReader(file);
                     let decorators: DecoratorRoot[] = await reader.readFile();
+                    decorators.forEach( d => d.parseContent() );
                     maper.generateStructure(maper, decorators);
                 }
 
-                console.log(maper);
-                return resolve(maper.generateRawObject());
+                let rawObject: RawObjectType = maper.generateRawObject();
+                console.log(rawObject.structures)
+                return resolve(rawObject);
 
             } catch {
                 return reject(internalError());

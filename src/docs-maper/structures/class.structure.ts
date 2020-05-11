@@ -9,6 +9,7 @@ export class ClassStructure extends Structure {
 
     register() { 
         this.maper.registerClass(this);
+        this.maper.registerStructure(this);
     }
 
 }

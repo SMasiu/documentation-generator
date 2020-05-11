@@ -13,7 +13,7 @@ export class DescriptionDecorator extends DecoratorRoot {
     name: string[] = names;
     type: DecoratorType = DecoratorType.any;
 
-    description: string = '';
+    private description: string = '';
 
     constructor(content: string) {
         super(content)
@@ -24,7 +24,7 @@ export class DescriptionDecorator extends DecoratorRoot {
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, description: this.description};
     }
 
 }

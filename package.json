@@ -15,9 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/event-stream": "^3.3.34",
+    "@types/uuid": "^7.0.3",
     "commander": "^5.1.0",
     "event-stream": "^4.0.1",
     "glob": "^7.1.6",
+    "uuid": "^8.0.0",
     "webpack": "^4.43.0"
   },
   "devDependencies": {

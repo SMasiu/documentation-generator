@@ -9,6 +9,7 @@ export class FunctionStrucrure extends Structure {
 
     register() {
         this.maper.registerFunction(this);
+        this.maper.registerStructure(this);
     }
 
 }

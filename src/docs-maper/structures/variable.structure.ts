@@ -9,6 +9,7 @@ export class VariableStructure extends Structure {
 
     register() {
         this.maper.registerVariable(this);
+        this.maper.registerStructure(this);
     }
 
 }

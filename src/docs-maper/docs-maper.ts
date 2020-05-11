@@ -11,10 +11,15 @@ import { RawObjectType } from "./docs-maper.types";
 
 export class DocsMaper {
 
+    structures: Structure[] = [];
     files: FileStructure[] = [];
     classes: ClassStructure[] = [];
     functions: FunctionStrucrure[] = [];
-    veriables: VariableStructure[] = [];
+    variables: VariableStructure[] = [];
+
+    registerStructure(structure: Structure) {
+        this.structures.push(structure);
+    }
 
     registerFile(file: FileStructure) {
         this.files.push(file);
@@ -29,11 +34,18 @@ export class DocsMaper {
     }
 
     registerVariable(v: VariableStructure) {
-        this.veriables.push(v);
+        this.variables.push(v);
     }
 
     generateRawObject(): RawObjectType {
-        return {};
+        let rawObject: RawObjectType = {  structures: [], files: [], classes: [], functions: [], variables: [] };
+        this.files.forEach( f => rawObject.files.push({ path: f.path, structures: f.structures.map( i => i.id ) }));
+        this.classes.forEach( c => rawObject.classes.push(c.id) );
+        this.functions.forEach( f => rawObject.functions.push(f.id) );
+        this.variables.forEach( v => rawObject.variables.push(v.id) );
+        this.structures.forEach( s => rawObject.structures.push({ id: s.id, content: {...s.getContent()} }))
+
+        return rawObject;
     }
 
     generateStructure(maper: DocsMaper, decorators: DecoratorRoot[]) {

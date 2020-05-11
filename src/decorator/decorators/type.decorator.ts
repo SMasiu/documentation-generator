@@ -14,16 +14,18 @@ export class TypeDecorator extends DecoratorRoot {
 
     type: DecoratorType = DecoratorType.any;
 
+    private variableType: string = '';
+
     constructor(content: string) {
         super(content);
     }
 
     parseContent() {
-
+        this.variableType = this.content;
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, type: this.variableType};
     }
 
 }

@@ -18,6 +18,8 @@ export abstract class DecoratorRoot {
     abstract parseContent(): void;
     abstract modifyResponse(object: {[key: string]: any}): {[key: string]: any};
 
-    constructor(public content: string) { }
+    constructor(public content: string) {
+        this.parseContent();
+    }
 
 }

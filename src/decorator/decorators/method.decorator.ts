@@ -14,12 +14,14 @@ export class MethodDecorator extends DecoratorRoot {
 
     type: DecoratorType = DecoratorType.method;
 
+    private methodName: string = '';
+
     constructor(content: string) {
         super(content);
     }
 
     parseContent() {
-        
+        this.methodName = this.content;    
     }
 
     modifyResponse(obj: {[key: string]: any}) {

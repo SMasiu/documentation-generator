@@ -13,18 +13,18 @@ export class FunctionDecorator extends DecoratorRoot {
     name: string[] = names;
     type: DecoratorType = DecoratorType.function;
 
-    description: string = '';
+    private functionName: string = '';
 
     constructor(content: string) {
         super(content)
     }
 
     parseContent() {
-        this.description = this.content;
+        this.functionName = this.content;
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, name: this.functionName, structureType: this.type};
     }
 
 }
