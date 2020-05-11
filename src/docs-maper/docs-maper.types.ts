@@ -15,3 +15,12 @@ export type RawObjectType = {
     functions: string[];
     variables: string[];
 };
+
+export enum StructureType {
+    file = 'file',
+    class = 'class',
+    method = 'method',
+    property = 'property',
+    function = 'function',
+    variable = 'variable'
+}

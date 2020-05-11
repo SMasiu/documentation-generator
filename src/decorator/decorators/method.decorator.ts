@@ -25,7 +25,7 @@ export class MethodDecorator extends DecoratorRoot {
     }
 
     modifyResponse(obj: {[key: string]: any}) {
-        return {...obj};
+        return {...obj, name: this.methodName};
     }
 
 }
