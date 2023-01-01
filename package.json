@@ -20,12 +20,12 @@
     "event-stream": "^4.0.1",
     "glob": "^7.1.6",
     "uuid": "^8.0.0",
-    "webpack": "^4.43.0"
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.4",
-    "ts-loader": "^7.0.2",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.8.3",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^5.0.1"
   }
 }
